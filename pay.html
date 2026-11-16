@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure payment | EVA SMART PHONE</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307173f'/%3E%3Crect x='10' y='6' width='12' height='20' rx='3' fill='%23ff6a00'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pay-page { background: radial-gradient(900px 500px at 50% -10%, #e7edfa, #f5f7fb 60%); min-height: 100dvh; }
+        .pay-top {
+            background: var(--navy);
+            color: #fff;
+            padding: 1rem 0;
+        }
+        .pay-top-inner {
+            width: min(720px, 100% - 2rem);
+            margin-inline: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .pay-top .brand-text strong { color: #fff; font-size: 1.1rem; }
+        .pay-top .brand-text em { font-size: .62rem; }
+        .pay-secure {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .78rem;
+            color: #b9c7e0;
+        }
+        .pay-secure svg { width: 15px; height: 15px; fill: #7fd4a8; }
+        .pay-main { padding: 2.5rem 1rem 3rem; }
+        .pay-card {
+            width: min(440px, 100%);
+            margin-inline: auto;
+            background: #fff;
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(7, 23, 63, .14);
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+        .pay-provider {
+            padding: 1.4rem 1.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            background: linear-gradient(120deg, #0b8f63, #0ea472);
+        }
+        .pay-provider.is-cbe { background: linear-gradient(120deg, #55216f, #7a3499); }
+        .pay-provider strong { font-size: 1.15rem; letter-spacing: .02em; }
+        .pay-provider span { font-size: .72rem; opacity: .85; display: block; }
+        .pay-provider .lock-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .18);
+            display: grid;
+            place-items: center;
+            flex: none;
+        }
+        .pay-provider .lock-badge svg { width: 18px; height: 18px; fill: #fff; }
+        .pay-body { padding: 1.5rem; }
+        .pay-amount-block { text-align: center; padding-bottom: 1.2rem; border-bottom: 1px dashed #e2e8f2; margin-bottom: 1.2rem; }
+        .pay-amount-block span { display: block; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+        .pay-amount-block strong { display: block; font-size: 2rem; color: var(--navy); letter-spacing: -.02em; margin: .2rem 0; }
+        .pay-amount-block em { font-style: normal; font-size: .8rem; color: #8593aa; letter-spacing: .05em; }
+        .pay-meta { display: grid; gap: .45rem; font-size: .86rem; margin-bottom: 1.3rem; }
+        .pay-meta div { display: flex; justify-content: space-between; gap: 1rem; }
+        .pay-meta span { color: var(--muted); }
+        .pay-meta strong { color: var(--navy); font-weight: 600; text-align: right; }
+        .pin-label { font-size: .85rem; font-weight: 600; color: #33415c; margin-bottom: .6rem; display: block; }
+        .pin-dots { display: flex; justify-content: center; gap: .7rem; margin-bottom: 1.2rem; }
+        .pin-dots i {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #c7d2e4;
+            background: transparent;
+            transition: background .15s ease, border-color .15s ease, transform .15s ease;
+        }
+        .pin-dots i.is-filled { background: var(--navy); border-color: var(--navy); transform: scale(1.06); }
+        .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; margin-bottom: 1rem; }
+        .pin-key {
+            border: 1px solid var(--line);
+            background: #f8fafd;
+            border-radius: 12px;
+            padding: .9rem 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy);
+            cursor: pointer;
+            transition: background .14s ease, transform .14s ease;
+        }
+        .pin-key:hover { background: #eef3fb; }
+        .pin-key:active { transform: scale(.97); }
+        .pin-key.is-soft { font-size: .8rem; font-weight: 600; color: var(--muted); }
+        .pin-hint { font-size: .76rem; color: var(--muted); text-align: center; margin: 0 0 1rem; }
+        .pin-hint strong { color: var(--orange-dark); }
+        .pay-error {
+            background: #fff2f2;
+            border: 1px solid #f6c9c9;
+            color: #a52a2a;
+            border-radius: 10px;
+            padding: .6rem .8rem;
+            font-size: .82rem;
+            margin-bottom: .9rem;
+            text-align: center;
+        }
+        .pay-cancel {
+            display: block;
+            width: 100%;
+            margin-top: .7rem;
+            border: 0;
+            background: transparent;
+            color: #8593aa;
+            font-size: .84rem;
+            cursor: pointer;
+            padding: .4rem;
+            text-decoration: underline;
+        }
+        .pay-cancel:hover { color: var(--danger); }
+        .sandbox-banner {
+            display: flex;
+            gap: .5rem;
+            align-items: flex-start;
+            background: #fff8e6;
+            border: 1px solid #f3e2b3;
+            color: #7a5c00;
+            border-radius: 10px;
+            padding: .6rem .8rem;
+            font-size: .76rem;
+            margin-bottom: 1.1rem;
+        }
+        .sandbox-banner svg { width: 15px; height: 15px; fill: #b58900; flex: none; margin-top: .15rem; }
+        .pay-state { padding: 2.4rem 1.5rem; text-align: center; }
+        .pay-state-icon {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 1rem;
+        }
+        .pay-state-icon svg { width: 32px; height: 32px; fill: #fff; }
+        .pay-state.is-success .pay-state-icon { background: #0f9d58; }
+        .pay-state.is-failed .pay-state-icon { background: #d33b3b; }
+        .pay-state h1 { font-size: 1.3rem; color: var(--navy); margin-bottom: .4rem; }
+        .pay-state p { font-size: .88rem; color: var(--muted); }
+        .pay-state .receipt {
+            background: #f7f9fd;
+            border: 1px dashed #cfdaea;
+            border-radius: 12px;
+            padding: .9rem 1rem;
+            margin: 1.2rem 0;
+            text-align: left;
+            display: grid;
+            gap: .4rem;
+            font-size: .84rem;
+        }
+        .receipt div { display: flex; justify-content: space-between; gap: 1rem; }
+        .receipt span { color: var(--muted); }
+        .receipt strong { color: var(--navy); }
+        .pay-back { text-align: center; margin-top: 1.4rem; font-size: .84rem; }
+        .pay-back a { color: var(--muted); text-decoration: none; }
+        .pay-back a:hover { color: var(--navy); }
+        .pay-loading { padding: 4rem 1.5rem; text-align: center; color: var(--muted); font-size: .9rem; }
+        .pay-loading::before {
+            content: "";
+            display: block;
+            width: 34px;
+            height: 34px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            border: 3px solid #dbe4f2;
+            border-top-color: var(--orange);
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="pay-page">
+
+<header class="pay-top">
+    <div class="pay-top-inner">
+        <span class="brand-text">
+            <strong>EVA SMART PHONE</strong>
+            <em>Smart Choice... Better Life</em>
+        </span>
+        <span class="pay-secure">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 9V7a5 5 0 0 0-10 0v2H5v12h14V9h-2Zm-8 0V7a3 3 0 0 1 6 0v2H9Z"/></svg>
+            Secure checkout
+        </span>
+    </div>
+</header>
+
+<main class="pay-main">
+    <div class="pay-card" id="payCard">
+        <div class="pay-loading" id="payLoading">Loading your order…</div>
+    </div>
+    <p class="pay-back"><a href="index.html">← Back to EVA SMART PHONE</a></p>
+</main>
+
+<script src="api.js"></script>
+<script src="pay.js"></script>
+</body>
+</html>

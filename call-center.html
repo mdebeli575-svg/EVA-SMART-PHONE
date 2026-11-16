@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MBO Digital call center for EVA SMART PHONE. Call +251 910 695 378 or +251 912 450 661, message @Ashuman124 on Telegram, or request a callback.">
+    <title>Call center | EVA SMART PHONE</title>
+    <meta name="theme-color" content="#07173f">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2307173f'/%3E%3Crect x='10' y='6' width='12' height='20' rx='3' fill='%23ff6a00'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ---------- Call center page ---------- */
+        .cc-body-bg { background: var(--bg); }
+
+        .cc-hero {
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            background:
+                radial-gradient(1100px 420px at 85% -10%, rgba(255, 106, 0, .22), transparent 65%),
+                linear-gradient(135deg, #061231 0%, var(--navy) 48%, #10336e 100%);
+            padding: 3.6rem 0 3.2rem;
+        }
+        .cc-hero::after {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            right: -80px;
+            bottom: -160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 106, 0, .22), transparent 70%);
+            pointer-events: none;
+        }
+        .cc-hero-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+            gap: 2.6rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .cc-hero h1 {
+            font-size: clamp(2.1rem, 4vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.08;
+            margin: .8rem 0 1rem;
+        }
+        .cc-hero h1 span {
+            background: linear-gradient(90deg, #ffb27a, var(--orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .cc-hero p { color: #c3cfe6; max-width: 34rem; font-size: 1.02rem; }
+        .cc-hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.6rem 0 1.2rem; }
+        .cc-hero-actions .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .28); }
+        .cc-hero-actions .btn-ghost:hover { background: rgba(255, 255, 255, .1); }
+        .cc-hours {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-size: .86rem;
+            color: #aebbd5;
+        }
+        .cc-hours svg { width: 16px; height: 16px; fill: var(--orange); flex: none; }
+
+        .cc-channels {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: .9rem;
+        }
+        .cc-channel {
+            display: flex;
+            flex-direction: column;
+            gap: .35rem;
+            padding: 1rem 1.05rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .14);
+            color: #fff;
+            text-decoration: none;
+            transition: transform .18s ease, background .18s ease, border-color .18s ease;
+        }
+        .cc-channel:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, .12);
+            border-color: rgba(255, 140, 60, .55);
+        }
+        .cc-channel-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 106, 0, .16);
+            margin-bottom: .2rem;
+        }
+        .cc-channel-icon svg { width: 17px; height: 17px; fill: var(--orange); }
+        .cc-channel small { color: #9fb0d0; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+        .cc-channel strong { font-size: .95rem; letter-spacing: .01em; }
+        .cc-channel em { font-style: normal; color: #9fb0d0; font-size: .76rem; }
+
+        .cc-main { padding: 3rem 0 3.6rem; }
+        .cc-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+            gap: 1.6rem;
+            align-items: start;
+        }
+        .cc-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 1.6rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .cc-form-card h2 { font-size: 1.45rem; color: var(--navy); letter-spacing: -.02em; }
+        .cc-form-card > div > p { color: var(--muted); font-size: .9rem; margin: .45rem 0 1.2rem; }
+        .cc-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+        .cc-form-grid .field-full { grid-column: 1 / -1; }
+        .cc-error {
+            margin: .9rem 0 0;
+            padding: .7rem .85rem;
+            border-radius: 10px;
+            background: #fff4f4;
+            border: 1px solid #f3c9c9;
+            color: #a52a2a;
+            font-size: .84rem;
+            font-weight: 500;
+        }
+        .cc-form-actions { margin-top: 1.1rem; }
+        .cc-fine { color: #8593aa; font-size: .76rem; margin-top: .7rem; }
+
+        .cc-success { text-align: center; padding: 1rem .5rem .4rem; }
+        .cc-success-icon {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #e7f7f0;
+        }
+        .cc-success-icon svg { width: 26px; height: 26px; fill: #0f7a53; }
+        .cc-success h2 { font-size: 1.4rem; color: var(--navy); }
+        .cc-success p { color: var(--muted); font-size: .9rem; margin: .6rem auto 0; max-width: 30rem; }
+        .cc-success-ref {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: .55rem 1rem;
+            border-radius: 10px;
+            background: var(--orange-soft);
+            border: 1px dashed #f5c39b;
+            color: var(--orange-dark);
+            font-weight: 800;
+            letter-spacing: .06em;
+        }
+        .cc-success .btn { margin-top: 1.2rem; }
+
+        .cc-side { display: grid; gap: 1.1rem; }
+        .cc-side-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 1.25rem 1.3rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .cc-side-card h3 { font-size: 1rem; color: var(--navy); margin-bottom: .6rem; }
+        .cc-side-card p, .cc-side-card li { color: var(--muted); font-size: .86rem; }
+        .cc-side-card ol { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; }
+        .cc-side-card ol li::marker { color: var(--orange-dark); font-weight: 700; }
+        .cc-mbo { border-color: #f4d3b6; background: linear-gradient(180deg, #fff8f1, #fff); }
+        .cc-mbo h3 { color: var(--orange-dark); }
+        .cc-mbo-links { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .8rem; }
+        .cc-mbo-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            padding: .38rem .65rem;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid #f0d9c4;
+            color: #8a4a10;
+            font-size: .78rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .cc-mbo-links a:hover { border-color: var(--orange); color: var(--orange-dark); }
+        .cc-mbo-links svg { width: 13px; height: 13px; fill: currentColor; }
+
+        .cc-footer { padding-bottom: 1.4rem; }
+        .cc-footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.4rem;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding-bottom: 1.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+        .cc-footer-brand strong { color: #fff; font-size: 1.05rem; letter-spacing: .06em; }
+        .cc-footer-brand p { font-size: .84rem; margin-top: .35rem; max-width: 22rem; }
+        .cc-footer-links { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; font-size: .84rem; }
+        .cc-footer-links a { color: #a9b6cf; text-decoration: none; }
+        .cc-footer-links a:hover { color: #fff; }
+        .cc-footer-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem 1rem;
+            justify-content: space-between;
+            padding-top: 1.1rem;
+            font-size: .78rem;
+            color: #7d8aa5;
+        }
+        .cc-footer-bottom a { color: #7d8aa5; text-decoration: none; }
+        .cc-footer-bottom a:hover { color: #fff; }
+
+        @media (max-width: 900px) {
+            .cc-hero-inner { grid-template-columns: 1fr; gap: 1.8rem; }
+            .cc-grid { grid-template-columns: 1fr; }
+            .cc-hero { padding: 2.6rem 0 2.4rem; }
+        }
+        @media (max-width: 560px) {
+            .cc-channels { grid-template-columns: 1fr 1fr; }
+            .cc-form-grid { grid-template-columns: 1fr; }
+            .cc-card { padding: 1.25rem; }
+            .cc-hero-actions .btn { flex: 1; }
+        }
+    </style>
+</head>
+<body class="cc-body-bg">
+
+<div class="topbar">
+    <div class="container topbar-inner">
+        <span class="topbar-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1l-2.23 2.2Z"/></svg>
+            <a href="tel:+251910695378" data-mbo-phone="0">+251 910 695 378</a>
+            <span class="topbar-sep">/</span>
+            <a href="tel:+251912450661" data-mbo-phone="1">+251 912 450 661</a>
+        </span>
+        <span class="topbar-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 23 12 2 3l0 7 15 2-15 2z"/></svg>
+            <a href="https://t.me/Ashuman124" target="_blank" rel="noopener" data-mbo="telegram">@Ashuman124</a>
+        </span>
+        <span class="topbar-item topbar-hours">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.4 2.1 1.7 3.6 3.8 4v3c-1.5 0-2.8-.5-3.8-1.3V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3Z"/></svg>
+            <a href="https://www.tiktok.com/@mbodigitalcode1" target="_blank" rel="noopener" data-mbo="tiktok">@mbodigitalcode1</a>
+        </span>
+    </div>
+</div>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="EVA SMART PHONE home">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><rect x="14" y="4" width="20" height="40" rx="5"/><rect x="19" y="8" width="10" height="26" rx="2" class="brand-screen"/><circle cx="24" cy="39" r="2" class="brand-dot"/></svg>
+            </span>
+            <span class="brand-text">
+                <strong>EVA SMART PHONE</strong>
+                <em>Company Software · MBO Digital code</em>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="index.html#products">Shop</a>
+            <a href="index.html#track">Track order</a>
+            <a href="call-center.html" aria-current="page">Call center</a>
+        </nav>
+
+        <div class="header-actions">
+            <a class="btn btn-primary" href="tel:+251910695378" data-mbo-phone="0">Call now</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="cc-hero">
+        <div class="container cc-hero-inner">
+            <div>
+                <span class="eyebrow">MBO Digital call center</span>
+                <h1>Talk to a human,<br><span>not a queue.</span></h1>
+                <p>
+                    We handle order questions, delivery updates, product advice and payments for
+                    EVA SMART PHONE — and we build call-center software for other businesses too.
+                </p>
+                <div class="cc-hero-actions">
+                    <a class="btn btn-primary" href="tel:+251910695378" data-mbo-phone="0">Call now</a>
+                    <a class="btn btn-ghost" href="#callback">Request a callback</a>
+                </div>
+                <div class="cc-hours">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 10.4V6h-2v7.4l5.2 3.1 1-1.7-4.2-2.4Z"/></svg>
+                    <span><span data-setting="hoursWeekday">Mon–Sat 8:30–20:00</span> · <span data-setting="hoursSunday">Sun 9:00–19:00</span></span>
+                </div>
+            </div>
+
+            <div class="cc-channels">
+                <a class="cc-channel" href="tel:+251910695378" data-mbo-phone-card="0">
+                    <span class="cc-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1l-2.23 2.2Z"/></svg></span>
+                    <small>Call line 1</small>
+                    <strong data-mbo-phone-text="0">+251 910 695 378</strong>
+                    <em>Tap to dial</em>
+                </a>
+                <a class="cc-channel" href="tel:+251912450661" data-mbo-phone-card="1">
+                    <span class="cc-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1l-2.23 2.2Z"/></svg></span>
+                    <small>Call line 2</small>
+                    <strong data-mbo-phone-text="1">+251 912 450 661</strong>
+                    <em>Tap to dial</em>
+                </a>
+                <a class="cc-channel" href="https://t.me/Ashuman124" target="_blank" rel="noopener">
+                    <span class="cc-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 23 12 2 3l0 7 15 2-15 2z"/></svg></span>
+                    <small>Telegram</small>
+                    <strong data-mbo="telegram">@Ashuman124</strong>
+                    <em>Chat with us</em>
+                </a>
+                <a class="cc-channel" href="https://www.tiktok.com/@mbodigitalcode1" target="_blank" rel="noopener">
+                    <span class="cc-channel-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.4 2.1 1.7 3.6 3.8 4v3c-1.5 0-2.8-.5-3.8-1.3V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3Z"/></svg></span>
+                    <small>TikTok</small>
+                    <strong data-mbo="tiktok">@mbodigitalcode1</strong>
+                    <em>See our work</em>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cc-main" id="callback">
+        <div class="container cc-grid">
+            <div class="cc-card cc-form-card">
+                <div id="callbackFormBody">
+                    <h2>Request a callback</h2>
+                    <p>Leave your number and what the call is about. We call you back during shop hours — no waiting on hold.</p>
+
+                    <form id="callbackForm" novalidate>
+                        <div class="cc-form-grid">
+                            <label class="field">
+                                <span>Your name</span>
+                                <input id="cbName" type="text" autocomplete="name" placeholder="Abebe Kebede" maxlength="80" required>
+                            </label>
+                            <label class="field">
+                                <span>Phone number</span>
+                                <input id="cbPhone" type="tel" autocomplete="tel" placeholder="0912159265" maxlength="20" required>
+                            </label>
+                            <label class="field">
+                                <span>What is the call about?</span>
+                                <select id="cbTopic" required>
+                                    <option value="" selected disabled>Choose a topic</option>
+                                    <option>Order or delivery</option>
+                                    <option>Product or stock question</option>
+                                    <option>Payment or refund</option>
+                                    <option>Warranty or repair</option>
+                                    <option>Call-center software (MBO Digital)</option>
+                                    <option>Something else</option>
+                                </select>
+                            </label>
+                            <label class="field">
+                                <span>Best time to call</span>
+                                <select id="cbTime">
+                                    <option>As soon as possible</option>
+                                    <option>Morning (8:30–12:00)</option>
+                                    <option>Afternoon (12:00–17:00)</option>
+                                    <option>Evening (17:00–20:00)</option>
+                                </select>
+                            </label>
+                            <label class="field field-full">
+                                <span>Anything we should know? <em>optional</em></span>
+                                <textarea id="cbNote" rows="3" maxlength="500" placeholder="Order reference, the phone you are asking about, or a good time to reach you."></textarea>
+                            </label>
+                        </div>
+
+                        <p class="cc-error" id="callbackError" hidden></p>
+                        <div class="cc-form-actions">
+                            <button class="btn btn-primary btn-block" type="submit" id="callbackSubmit">Request callback</button>
+                        </div>
+                        <p class="cc-fine">We use your number only to return this call. Requests are answered in the order they arrive.</p>
+                    </form>
+                </div>
+
+                <div class="cc-success" id="callbackSuccess" hidden>
+                    <span class="cc-success-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.6 16.2-4-4L4.2 13.6 9.6 19 20 8.6 18.6 7.2 9.6 16.2Z"/></svg></span>
+                    <h2>Callback requested</h2>
+                    <p>Your reference is</p>
+                    <span class="cc-success-ref" id="callbackRef">CB-XXXXXX</span>
+                    <p>We will call <strong id="callbackPhone">your number</strong> during shop hours. If we miss you, send us a message on Telegram at <a href="https://t.me/Ashuman124" target="_blank" rel="noopener" data-mbo="telegram">@Ashuman124</a>.</p>
+                    <button class="btn btn-ghost-dark" type="button" id="callbackAgain">Send another request</button>
+                </div>
+            </div>
+
+            <aside class="cc-side">
+                <div class="cc-side-card">
+                    <h3>What happens next</h3>
+                    <ol>
+                        <li>You get a reference like <strong>CB-7K3F2A</strong> and see it above.</li>
+                        <li>We call the number you left, from one of the two lines at the top.</li>
+                        <li>No answer? We try once more and send a Telegram message.</li>
+                    </ol>
+                </div>
+
+                <div class="cc-side-card cc-mbo">
+                    <h3>Call-center software by MBO Digital</h3>
+                    <p>
+                        MBO Digital builds call-center and customer-support software: callback queues,
+                        agent dashboards, call notes and reporting. This call center runs on it.
+                    </p>
+                    <div class="cc-mbo-links">
+                        <a href="tel:+251910695378" data-mbo-phone="0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1l-2.23 2.2Z"/></svg><span data-mbo-phone-text="0">+251 910 695 378</span></a>
+                        <a href="tel:+251912450661" data-mbo-phone="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.58 3.6a1 1 0 0 1-.25 1l-2.23 2.2Z"/></svg><span data-mbo-phone-text="1">+251 912 450 661</span></a>
+                        <a href="https://t.me/Ashuman124" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21 23 12 2 3l0 7 15 2-15 2z"/></svg><span>Telegram</span></a>
+                        <a href="https://www.tiktok.com/@mbodigitalcode1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.4 2.1 1.7 3.6 3.8 4v3c-1.5 0-2.8-.5-3.8-1.3V15a6 6 0 1 1-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 1 0 2 2.8V3h3Z"/></svg><span data-mbo="tiktok">@mbodigitalcode1</span></a>
+                    </div>
+                </div>
+
+                <div class="cc-side-card">
+                    <h3>Shopping instead?</h3>
+                    <p>Browse the catalogue, check live stock and pay with Telebirr or CBE Birr. Our shop is in Fiteh Building, Megenagna.</p>
+                    <a class="btn btn-ghost-dark" href="index.html#products" style="margin-top:.9rem">Browse phones</a>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer cc-footer">
+    <div class="container cc-footer-inner">
+        <div class="cc-footer-brand">
+            <strong>MBO DIGITAL</strong>
+            <p>Call-center software and customer support for EVA SMART PHONE. Megenagna, Addis Ababa.</p>
+        </div>
+        <div class="cc-footer-links">
+            <a href="tel:+251910695378" data-mbo-phone="0">+251 910 695 378</a>
+            <a href="tel:+251912450661" data-mbo-phone="1">+251 912 450 661</a>
+            <a href="https://t.me/Ashuman124" target="_blank" rel="noopener">Telegram @Ashuman124</a>
+            <a href="https://www.tiktok.com/@mbodigitalcode1" target="_blank" rel="noopener">TikTok @mbodigitalcode1</a>
+        </div>
+    </div>
+    <div class="container cc-footer-bottom">
+        <span>© <span id="year">2026</span> EVA SMART PHONE. Call center by MBO Digital.</span>
+        <span><a href="index.html">Back to the shop</a> · <a href="admin.html">EVA SMART PHONE Dashboard</a></span>
+    </div>
+</footer>
+
+<script src="api.js"></script>
+<script src="call-center.js"></script>
+</body>
+</html>
